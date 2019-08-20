@@ -32,14 +32,14 @@ public class UrlApi {
             value = "the long",
             required = true) @PathVariable String urlId) {
         logger.debug("Searching for url with urlId :: {}", urlId);
-        Result<Url> urlResult = null;
+        String urlResult = null;
         ResponseEntity<Object> response = null;
         try {
             urlResult = urlService.getUrlById(urlId);
             if (urlResult == null) {
                 response = new ResponseEntity<Object>(NO_RECORD + urlId, HttpStatus.OK);
             } else {
-                response = new ResponseEntity<Object>(urlResult.one(), HttpStatus.OK);
+                response = new ResponseEntity<Object>(urlResult, HttpStatus.OK);
             }
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
