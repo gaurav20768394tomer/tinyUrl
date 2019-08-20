@@ -26,12 +26,12 @@ public class UrlApi {
 
     private static final String NO_RECORD = "Url not found for Url Id : ";
 
-    @ApiOperation(value = "Search Url by urlId", produces = "application/json")
+    @ApiOperation(value = "Search Url by long urlId", produces = "application/json")
     @RequestMapping(value = "/{urlId}", method = RequestMethod.GET)
     public ResponseEntity<Object> searchUrlById(@ApiParam(name = "urlId",
             value = "the long",
             required = true) @PathVariable String urlId) {
-        logger.debug("Searching for url with urlId :: {}", urlId);
+        logger.debug("Searching for url with long urlId :: {}", urlId);
         String urlResult = null;
         ResponseEntity<Object> response = null;
         try {
@@ -49,18 +49,18 @@ public class UrlApi {
     }
 
 
-    @ApiOperation(value = "Create a new Url", consumes = "application/json")
+    @ApiOperation(value = "Create a short Url", consumes = "application/json")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "url", value = "long url",
                     required = true, dataType = "String", paramType = "query") })
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Object> createUrl(
             @RequestHeader(name = "url") String urlLong) {
-        logger.debug("Creating Url with name :: {}", urlLong);
+        logger.debug("creating short url for :: {}", urlLong);
         ResponseEntity<Object> response = null;
         try {
             String urlId = urlService.createUrl(urlLong);
-            response = new ResponseEntity<Object>("Url created successfully with Id :" +
+            response = new ResponseEntity<Object>("Url shortened successfully with Id :" +
                     urlId, HttpStatus.OK);
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
